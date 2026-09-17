@@ -1,13 +1,14 @@
 package com.focustask.service;
 
 import com.focustask.entity.Task;
+import com.focustask.exception.TaskNotFoundException;
 import com.focustask.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Phase 8: Service Layer
+ * Phase 8 & 10: Service Layer
  *
  * Contains business and application logic.
  * Keeps the Controller thin and isolates database operations.
@@ -35,7 +36,7 @@ public class TaskService {
     // 3. Get a single task by ID
     public Task getTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     // 4. Update an existing task
@@ -50,7 +51,7 @@ public class TaskService {
     // 5. Delete a task by ID
     public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
-            throw new RuntimeException("Task not found with id: " + id);
+            throw new TaskNotFoundException(id);
         }
         taskRepository.deleteById(id);
     }
