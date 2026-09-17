@@ -2,6 +2,7 @@ package com.focustask.controller;
 
 import com.focustask.entity.Task;
 import com.focustask.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class TaskController {
 
     // 1. Create a task (POST /api/tasks) -> 201 Created
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
@@ -49,7 +50,7 @@ public class TaskController {
 
     // 4. Update task by ID (PUT /api/tasks/{id}) -> 200 OK
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
         return ResponseEntity.ok(taskService.updateTask(id, task));
     }
 

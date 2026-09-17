@@ -5,10 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * Task Entity mapped to the 'tasks' table in MySQL.
- * Demonstrates JPA ORM annotations: @Entity, @Table, @Id, @GeneratedValue.
+ * Demonstrates JPA ORM annotations and Jakarta Bean Validation.
  */
 @Entity
 @Table(name = "tasks")
@@ -18,8 +20,13 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title is mandatory")
+    @Size(max = 100, message = "Title must not exceed 100 characters")
     private String title;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
     private String description;
+
     private boolean completed;
 
     // Default no-argument constructor required by JPA
